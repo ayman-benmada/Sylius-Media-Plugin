@@ -33,6 +33,8 @@ class MediaChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => function (Options $options): array {
+                assert(is_array($options['row_attr']));
+
                 $channelCodes = $options['row_attr']['channels'] ?? null;
                 $tagCodes = $options['row_attr']['tags'] ?? null;
                 $types = $options['row_attr']['types'] ?? null;

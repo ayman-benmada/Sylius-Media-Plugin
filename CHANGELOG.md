@@ -4,5 +4,7 @@
 
 #### Details
 
-- popup
-- fixture
+- Media management
+- Tag management
+- Implementation of the fixture *abenmada_media_plugin_media_tag* for tag generation
+- Implementation of a new media field allowing selection of a file from the media library

@@ -40,6 +40,6 @@ class MediaRepository extends EntityRepository
                 ->setParameter('types', $types);
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult(); // @phpstan-ignore-line
     }
 }

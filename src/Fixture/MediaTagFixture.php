@@ -16,6 +16,7 @@ class MediaTagFixture extends AbstractResourceFixture
 
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode): void
     {
+        // @phpstan-ignore-next-line
         $resourceNode
             ->children()
             ->scalarNode('code')->cannotBeEmpty()->end()
