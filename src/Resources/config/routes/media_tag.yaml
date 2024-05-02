@@ -1,0 +1,18 @@
+abenmada_media_plugin_admin_media_tag:
+    resource: |
+        alias: abenmada_media_plugin.media_tag
+        section: admin
+        path: media_tags
+        templates: "@SyliusAdmin\\Crud"
+        redirect: index
+        grid: abenmada_media_plugin_admin_media_tag
+        except: ['show']
+        vars:
+            all:
+                header: abenmada_media_plugin.ui.media_tags
+                subheader: abenmada_media_plugin.ui.manage_media_tags
+                templates:
+                    form: "@MediaPlugin/Admin/MediaTag/_form.html.twig"
+            index:
+                icon: 'tags'
+    type: sylius.resource

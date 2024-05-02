@@ -1,0 +1,9 @@
+services:
+    abenmada_media_plugin.listener.media_file_upload:
+        class: Sylius\Bundle\CoreBundle\EventListener\ImageUploadListener
+        public: true
+        arguments:
+            - '@sylius.image_uploader'
+        tags:
+            - { name: kernel.event_listener, event: abenmada_media_plugin.media.pre_create, method: uploadImage }
+            - { name: kernel.event_listener, event: abenmada_media_plugin.media.pre_update, method: uploadImage }

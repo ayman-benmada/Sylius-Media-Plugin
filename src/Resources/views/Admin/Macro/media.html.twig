@@ -1,0 +1,49 @@
+{% macro addModal() %}
+    <div class="ui modal large" id="media_modal">
+        <div class="header">
+            {{ 'abenmada_media_plugin.media.modal.select_media'|trans }}
+        </div>
+
+        <div class="scrolling content" id="media_modal_content"></div>
+
+        <div class="actions">
+            <div class="ui black deny button">
+                {{ 'abenmada_media_plugin.media.modal.cancel'|trans }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro addField(field, label = null, isRequired = false) %}
+    <div class="field preview-media {% if isRequired %}required{% endif %}">
+        {% if label is not null %}
+            <label>{{ label | trans }}</label>
+        {% endif %}
+
+        <div class="field">
+            {% if field.vars.data.file.path|default(null) is not null %}
+                {% set path = field.vars.data.file.path %}
+                {% set type = field.vars.data.type %}
+
+                {% if type is same as 'image' %}
+                    <img class="ui small bordered image preview-file" src="{{ path | imagine_filter('sylius_shop_product_original') }}" width="300" alt="">
+                {% elseif type is same as 'video' %}
+                    <video class="preview-file" controls muted width="300" src="{{ '/media/image/' ~ path }}"></video>
+                {% else %}
+                    <iframe class="preview-file" width="300" src="{{ '/media/image/' ~ path }}"></iframe>
+                {% endif %}
+            {% endif %}
+
+            {{- form_widget(field, {'attr': {'style' : 'visibility: hidden; display: none;'}}) -}}
+
+            <a class="ui labeled icon button" href="#" data-action="display-media-modal-btn" style="display: table; margin-top: 20px">
+                <i class="icon images"></i>
+                {{ 'abenmada_media_plugin.media.modal.choose_media'|trans }}
+            </a>
+
+            <div class="ui element">
+                {{- form_errors(field) -}}
+            </div>
+        </div>
+    </div>
+{% endmacro %}

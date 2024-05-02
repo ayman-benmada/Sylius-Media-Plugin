@@ -1,0 +1,61 @@
+services:
+    abenmada_media_plugin.media.form.type:
+        class: Abenmada\MediaPlugin\Form\Type\MediaType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%abenmada_media_plugin.model.media.class%'
+            - [ 'abenmada_media_plugin' ]
+
+    abenmada_media_plugin.media_translation.form.type:
+        class: Abenmada\MediaPlugin\Form\Type\MediaTranslationType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%abenmada_media_plugin.model.media_translation.class%'
+            - [ 'abenmada_media_plugin' ]
+
+    abenmada_media_plugin.media_tag.form.type:
+        class: Abenmada\MediaPlugin\Form\Type\MediaTagType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%abenmada_media_plugin.model.media_tag.class%'
+            - [ 'abenmada_media_plugin' ]
+
+    abenmada_media_plugin.media_tag_translation.form.type:
+        class: Abenmada\MediaPlugin\Form\Type\MediaTagTranslationType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%abenmada_media_plugin.model.media_tag_translation.class%'
+            - [ 'abenmada_media_plugin' ]
+
+    abenmada_media_plugin.media_file.form.type:
+        class: Abenmada\MediaPlugin\Form\Type\MediaFileType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%abenmada_media_plugin.model.media_file.class%'
+            - [ 'abenmada_media_plugin' ]
+
+    abenmada_media_plugin.media.form.choice_type:
+        class: Abenmada\MediaPlugin\Form\Choice\MediaChoiceType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@abenmada_media_plugin.repository.media'
+
+    abenmada_media_plugin.media_tag.form.choice_type:
+        class: Abenmada\MediaPlugin\Form\Choice\MediaTagChoiceType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@abenmada_media_plugin.repository.media_tag'
+
+    abenmada_media_plugin.media_type.form.choice_type:
+        class: Abenmada\MediaPlugin\Form\Choice\MediaTypeChoiceType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@translator'

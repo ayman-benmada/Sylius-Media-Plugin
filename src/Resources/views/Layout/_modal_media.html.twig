@@ -1,0 +1,126 @@
+<script>
+    const updateMediaModalContent = function (button) {
+        const selectMediaEl = $(button).siblings('select');
+        const optionsEl = selectMediaEl.find('option');
+
+        const translation = {
+            noMedia: "{{ 'abenmada_media_plugin.media.modal.no_media'|trans }}",
+            selected: "{{ 'abenmada_media_plugin.media.modal.selected'|trans }}",
+            choose: "{{ 'abenmada_media_plugin.media.modal.choose'|trans }}",
+            noMediaFound: "{{ 'abenmada_media_plugin.media.modal.no_media_found'|trans }}",
+            info: "{{ 'sylius.ui.info'|trans }}"
+        }
+
+        let mediaModalContent = '';
+
+        if (optionsEl && (optionsEl.length > 1 || (optionsEl.length === 1 && optionsEl.val() !== ''))) {
+            mediaModalContent += '<div class="ui segment"><div class="ui grid cards">';
+
+            optionsEl.each(function () {
+                const optionEl = $(this);
+
+                const path = optionEl.data('path');
+                const type = optionEl.data('type');
+
+                mediaModalContent += '<div class="card" style="margin-right: 19px; margin-left: 19px"><div style="height: 250px">';
+
+                if (path === undefined || type === undefined) {
+                    mediaModalContent += `<i class="close icon large" style="font-size:50px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;"></i></div>`;
+                } else {
+                    const extension = path.split('.').pop().toLowerCase();
+
+                    if (type === 'image') {
+                        const imagePath = '{{ '1234567890' | imagine_filter('sylius_shop_product_original') }}'.replace('1234567890', path);
+                        mediaModalContent += `<img src="${imagePath}" alt="" width="100%" height="100%" style="object-fit: cover;">`;
+                    } else if (type === 'video') {
+                        mediaModalContent += `<video controls muted width="100%" height="100%" src="${'/media/image/' + path}"></video>`;
+                    } else {
+                        mediaModalContent += `<iframe width="100%" height="100%" src="${'/media/image/' + path}"></iframe>`;
+                    }
+
+                    mediaModalContent += `
+                            <div class="ui black label" style="top: -31px; position: relative; border-bottom-left-radius: 0; border-top-left-radius: 0; left: -2px;">
+                                <i class="video outline icon"></i>${extension}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (optionEl.val() === null || optionEl.val() === '') {
+                    mediaModalContent += `
+                        <div class="content">
+                            <div class="header" style="margin-top: 10px">${translation.noMedia}</div><br/>
+                        </div>
+                    `;
+                } else {
+                    mediaModalContent += `
+                        <div class="content">
+                            <div class="header" style="margin-top: 10px">${optionEl.text()}</div><br/>
+                        </div>
+                    `;
+                }
+
+                if (optionEl.attr('selected')) {
+                    mediaModalContent += `
+                        <div class="extra content">
+                            <button class="ui button" disabled>${translation.selected}</button>
+                        </div>
+                    `;
+                } else {
+                    mediaModalContent += `
+                        <div class="extra content">
+                            <button class="ui primary button" onclick="onOptionSelected('${selectMediaEl.attr('id')}', '${optionEl.val()}')">${translation.choose}</button>
+                        </div>
+                    `;
+                }
+
+                mediaModalContent += '</div>';
+            });
+
+            mediaModalContent += '</div></div>';
+        } else {
+            mediaModalContent += `
+                <div class="ui icon info message">
+                    <i class="info circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            ${translation.info}
+                        </div>
+                        <p>${translation.noMediaFound}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        $('#media_modal_content').html(mediaModalContent);
+        $('#media_modal').modal('show');
+    };
+
+    function onOptionSelected(selectId, optionValue) {
+        const selectEl = $('#' + selectId);
+
+        selectEl.find('option').each(function () {
+            if ($(this).val() === optionValue) {
+                $(this).attr('selected', 'selected');
+            } else {
+                $(this).removeAttr('selected');
+            }
+        });
+
+        selectEl.val(optionValue);
+        selectEl.trigger('change');
+
+        $('#media_modal').modal('hide');
+    }
+
+    $.fn.extend({
+        displayMediaModal(element) {
+            $(element).on('click', 'a[data-action="display-media-modal-btn"]', function (e) {
+                e.preventDefault();
+                updateMediaModalContent(this);
+            });
+        }
+    });
+
+    $(document).displayMediaModal('body');
+</script>

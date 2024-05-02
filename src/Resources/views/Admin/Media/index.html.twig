@@ -1,0 +1,122 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+
+{% set definition = resources.definition %}
+{% set data = resources.data %}
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.'~metadata.pluralName) %}
+
+{% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="column">
+            {{ headers.default(header|trans, configuration.vars.icon, configuration.vars.subheader|trans) }}
+            {% include configuration.vars.templates.breadcrumb %}
+        </div>
+        <div class="middle aligned column">
+            <div class="ui right floated buttons">
+                {{ buttons.create(path('abenmada_media_plugin_admin_media_create')) }}
+            </div>
+        </div>
+    </div>
+
+    {% set path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+    {% set criteria = app.request.query.get('criteria') %}
+
+    {% if definition.enabledFilters|length > 0 %}
+        <div class="ui hidden divider"></div>
+        <div class="ui styled fluid accordion">
+            <div class="title {% if criteria is not null %}active{% endif %}">
+                <i class="dropdown icon"></i>
+                <i class="filter icon"></i>
+                {{ 'sylius.ui.filters'|trans }}
+            </div>
+            <div class="content {% if criteria is not null %}active{% endif %}">
+                <form method="get" action="{{ path }}" class="ui loadable form" novalidate>
+                    <div class="sylius-filters">
+                        {% for filter in definition.enabledFilters|filter(filter => filter.enabled)|sort_by('position') %}
+                            <div class="sylius-filters__field">
+                                {{ sylius_grid_render_filter(resources, filter) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {{ buttons.filter() }}
+                    {{ buttons.resetFilters(path) }}
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="ui hidden divider"></div>
+    <div class="sylius-grid-wrapper">
+        <div class="sylius-grid-nav">
+            <div class="sylius-grid-nav__pagination">
+                {{ pagination.simple(data) }}
+            </div>
+            {% if definition.limits|length > 1 and data|length > min(definition.limits) %}
+                <div class="sylius-grid-nav__perpage">
+                    <div class="ui fluid one menu sylius-paginate">
+                        {{ pagination.perPage(data, definition.limits) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if data|length > 0 %}
+            <div class="ui segment">
+                <div class="ui grid cards">
+                    {% for row in data %}
+                        {% set extension = row.file.path | split('.') | last | lower %}
+
+                        <div class="card">
+                            <div style="height: 250px">
+                                {% if row.type is same as 'image' %}
+                                    <img src="{{ row.file.path | imagine_filter('sylius_shop_product_original') }}" alt="{{ row.alt }}" width="100%" height="100%" style="object-fit: cover;">
+                                {% elseif row.type is same as 'video' %}
+                                    <video controls muted width="100%" height="100%" src="{{ '/media/image/' ~ row.file.path }}"></video>
+                                {% else %}
+                                    <iframe class="preview-file" width="100%" height="100%" src="{{ '/media/image/' ~ row.file.path }}"></iframe>
+                                {% endif %}
+
+                                <div class="ui black label" style="top: -31px; position: relative; border-bottom-left-radius: 0; border-top-left-radius: 0; left: -2px;">
+                                    <i class="file image outline icon"></i> {{ extension }}
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <div class="header">{{ row.code }}</div><br/>
+                                <div class="meta">
+                                    {% for tag in row.tags %}
+                                        <span class="ui horizontal label">{{ tag.label }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="description">
+                                    {% if row.description|length > 50 %}
+                                        {{ row.description[:50] ~ '...' }}
+                                    {% else %}
+                                        {{ row.description }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="extra content" style="display: grid; grid-template-columns: 1fr 1fr">
+                                <div class="ui two buttons">
+                                    {{ buttons.edit(path('abenmada_media_plugin_admin_media_update', {'id': row.id}), null, row.id, true) }}
+                                    {{ buttons.delete(path('abenmada_media_plugin_admin_media_delete', {'id': row.id}), null, true, row.id) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {{ messages.info('sylius.ui.no_results_to_display') }}
+        {% endif %}
+
+        {{ pagination.simple(data) }}
+    </div>
+{% endblock %}

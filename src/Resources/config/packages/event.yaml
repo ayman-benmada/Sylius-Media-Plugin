@@ -1,0 +1,11 @@
+sylius_ui:
+    events:
+        sylius.admin.layout.javascripts:
+            blocks:
+                abenmada_media_plugin_display_uploaded_media:
+                    template: "@MediaPlugin/Layout/_display_uploaded_media.html.twig"
+                    priority: 9
+
+                abenmada_media_plugin_display_modal_media:
+                    template: "@MediaPlugin/Layout/_modal_media.html.twig"
+                    priority: 8

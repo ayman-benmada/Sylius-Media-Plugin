@@ -1,0 +1,32 @@
+abenmada_media_plugin:
+    ui:
+        media_library: Media library
+        media: Medias
+        medias: Medias
+        manage_medias: Manage your medias
+        media_tags: Tags
+        manage_media_tags: Manage your tags
+    media_tag:
+        code: Code
+        label: Label
+    media:
+        code: Code
+        file: File
+        tags: Tags
+        channels: Channels
+        type: Type
+        description: Description
+        alt: Alt
+        created_at: Created at
+        types:
+            image: Image
+            document: Document
+            video: Video
+        modal:
+            choose_media: Choose a media
+            select_media: Select a media
+            no_media_found: No media found.
+            no_media: No media
+            choose: Choose
+            selected: Selected
+            cancel: Cancel

@@ -1,0 +1,27 @@
+{% form_theme form '@MediaPlugin/Admin/Media/Form/mediaFile.html.twig' %}
+
+{% from '@SyliusAdmin/Macro/translationForm.html.twig' import translationForm %}
+
+{{ form_errors(form) }}
+
+<div class="ui segment">
+    <div class="two fields">
+        {{ form_row(form.code) }}
+        {{ form_row(form.type) }}
+    </div>
+
+    <div class="required field" id="preview-file">
+        <label>{{ 'abenmada_media_plugin.media.file'|trans }}</label>
+        {{ form_row(form.file, {'label': false}) }}
+    </div>
+</div>
+
+<div class="ui segment">
+    {{ form_row(form.channels) }}
+</div>
+
+<div class="ui segment">
+    {{ form_row(form.tags) }}
+</div>
+
+{{ translationForm(form.translations, resource) }}

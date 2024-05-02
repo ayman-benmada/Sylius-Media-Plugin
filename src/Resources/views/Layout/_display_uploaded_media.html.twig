@@ -1,0 +1,70 @@
+<script>
+    const displayUploadedFile = function (input) {
+        if (input.files && input.files[0]) {
+            const extension = input.files[0].name.split('.').pop().toLowerCase();
+            const reader = new FileReader();
+
+            $(input).parent().siblings('.preview-file').remove();
+
+            reader.onload = (event) => {
+                if (extension === 'pdf') {
+                    const el = $('<embed class="preview-file" width="300" type="application/pdf">');
+                    el.attr('src', event.target.result);
+                    $(input).parent().before(el);
+                } else if (extension === 'doc' || extension === 'docx' || extension === 'xlsx') {
+                    const el = $('<label class="ui icon labeled preview-file"><i class="file icon"></i>' + input.files[0].name + '</label>');
+                    $(input).parent().before(el);
+                } else if (extension === 'mp4' || extension === 'mov') {
+                    const video = $('<video class="preview-file" controls muted width="300">');
+                    video.attr('src', event.target.result);
+                    $(input).parent().before(video);
+                } else {
+                    const img = $('<img class="ui small bordered image preview-file"/>');
+                    img.attr('src', event.target.result);
+                    $(input).parent().before(img);
+                }
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    const displayUploadedMedia = function (selectEl) {
+        const fileEl = $(selectEl).siblings('.preview-file');
+        const optionEl = selectEl.options[selectEl.selectedIndex];
+
+        const type = optionEl.dataset.type;
+        const path = optionEl.dataset.path;
+
+        if (selectEl.value) {
+            fileEl.remove();
+
+            if (type === 'image') {
+                const imagePath = '{{ '1234567890' | imagine_filter('sylius_shop_product_original') }}'.replace('1234567890', path);
+                $(selectEl).before(`<img class="ui small bordered image preview-file" src="${imagePath}" width="300" alt="">`);
+            } else if (type === 'video') {
+                $(selectEl).before(`<video class="preview-file" controls muted width="300" src="/media/image/${path}"></video>`);
+            } else {
+                $(selectEl).before(`<iframe class="preview-file" width="300" src="/media/image/${path}"></iframe>`);
+            }
+        } else {
+            fileEl.remove();
+        }
+    };
+
+    $.fn.extend({
+        previewUploadedFile(root) {
+            $(root).on('change', 'input[type="file"]', function () {
+                displayUploadedFile(this);
+            });
+        },
+        previewUploadedMedia(root) {
+            $(root).on('change', 'select', function () {
+                displayUploadedMedia(this);
+            });
+        },
+    });
+
+    $(document).previewUploadedFile('#preview-file');
+    $(document).previewUploadedMedia('.preview-media');
+</script>

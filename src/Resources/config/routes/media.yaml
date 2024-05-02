@@ -1,0 +1,34 @@
+abenmada_media_plugin_admin_media:
+    resource: |
+        alias: abenmada_media_plugin.media
+        section: admin
+        path: medias
+        templates: "@SyliusAdmin\\Crud"
+        redirect: index
+        only: ['create', 'update', 'delete']
+        vars:
+            all:
+                header: abenmada_media_plugin.ui.medias
+                subheader: abenmada_media_plugin.ui.manage_medias
+                templates:
+                    form: "@MediaPlugin/Admin/Media/_form.html.twig"
+            index:
+                icon: 'images'
+    type: sylius.resource
+
+abenmada_media_plugin_admin_media_index:
+    path: /medias
+    methods: [ GET ]
+    defaults:
+        _controller: abenmada_media_plugin.controller.media:indexAction
+        _sylius:
+            section: admin
+            permission: true
+            grid: abenmada_media_plugin_admin_media
+            template: "@MediaPlugin/Admin/Media/index.html.twig"
+            vars:
+                header: abenmada_media_plugin.ui.medias
+                subheader: abenmada_media_plugin.ui.manage_medias
+                icon: images
+                templates:
+                    breadcrumb: '@MediaPlugin/Admin/Media/Index/_breadcrumb.html.twig'

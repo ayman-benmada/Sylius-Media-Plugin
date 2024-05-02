@@ -1,0 +1,28 @@
+sylius_resource:
+    resources:
+        abenmada_media_plugin.media:
+            driver: doctrine/orm
+            classes:
+                model: Abenmada\MediaPlugin\Entity\Media\Media
+                form: Abenmada\MediaPlugin\Form\Type\MediaType
+                repository: Abenmada\MediaPlugin\Repository\MediaRepository
+            translation:
+                classes:
+                    model: Abenmada\MediaPlugin\Entity\Media\MediaTranslation
+                    form: Abenmada\MediaPlugin\Form\Type\MediaTranslationType
+
+        abenmada_media_plugin.media_file:
+            driver: doctrine/orm
+            classes:
+                model: Abenmada\MediaPlugin\Entity\Media\MediaFile
+                form: Abenmada\MediaPlugin\Form\Type\MediaFileType
+
+        abenmada_media_plugin.media_tag:
+            driver: doctrine/orm
+            classes:
+                model: Abenmada\MediaPlugin\Entity\Media\MediaTag
+                form: Abenmada\MediaPlugin\Form\Type\MediaTagType
+            translation:
+                classes:
+                    model: Abenmada\MediaPlugin\Entity\Media\MediaTagTranslation
+                    form: Abenmada\MediaPlugin\Form\Type\MediaTagTranslationType

@@ -1,0 +1,5 @@
+media:
+    resource: "routes/media.yaml"
+
+media_tag:
+    resource: "routes/media_tag.yaml"

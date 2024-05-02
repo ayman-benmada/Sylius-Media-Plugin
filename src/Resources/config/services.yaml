@@ -1,0 +1,18 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    Abenmada\MediaPlugin\:
+        resource: '../../*'
+        exclude: '../../{Form,Fixture}'
+
+imports:
+    - { resource: "packages/resource.yaml" }
+    - { resource: "packages/form.yaml" }
+    - { resource: "packages/menu.yaml" }
+    - { resource: "packages/grid.yaml" }
+    - { resource: "packages/fixture.yaml" }
+    - { resource: "packages/event.yaml" }
+    - { resource: "packages/listener.yaml" }

@@ -1,0 +1,14 @@
+services:
+    abenmada_media_plugin.fixture.media_tag:
+        class: Abenmada\MediaPlugin\Fixture\MediaTagFixture
+        arguments:
+            - '@abenmada_media_plugin.manager.media_tag'
+            - '@abenmada_media_plugin.fixture.example_factory.media_tag'
+        tags:
+            - { name: sylius_fixtures.fixture }
+
+    abenmada_media_plugin.fixture.example_factory.media_tag:
+        class: Abenmada\MediaPlugin\Fixture\Factory\MediaTagExampleFactory
+        arguments:
+            - '@abenmada_media_plugin.factory.media_tag'
+            - '@abenmada_media_plugin.factory.media_tag_translation'

@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Abenmada\MediaPlugin
+        psr4_prefix: Abenmada\MediaPlugin

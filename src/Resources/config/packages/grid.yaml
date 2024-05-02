@@ -1,0 +1,71 @@
+sylius_grid:
+    grids:
+        abenmada_media_plugin_admin_media_tag:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Abenmada\MediaPlugin\Entity\Media\MediaTag
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [ code, translations.label ]
+            sorting:
+                label: asc
+            fields:
+                code:
+                    type: string
+                    label: abenmada_media_plugin.media_tag.code
+                    sortable: ~
+                label:
+                    type: string
+                    label: abenmada_media_plugin.media_tag.label
+                    sortable: translations.label
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
+                bulk:
+                    delete:
+                        type: delete
+
+        abenmada_media_plugin_admin_media:
+            limits: [ 12, 36, 60, 120 ]
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Abenmada\MediaPlugin\Entity\Media\Media
+
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [ code ]
+            fields:
+                code:
+                    type: string
+                    label: abenmada_media_plugin.media.code
+                    sortable: ~
+                path:
+                    type: string
+                    label: abenmada_media_plugin.media.path
+                    path: file.path
+                created_at:
+                    type: datetime
+                    label: abenmada_media_plugin.media.created_at
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
