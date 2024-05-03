@@ -4,6 +4,11 @@
     The Media plugin provides a library to manage your media
 </p>
 
+![presentation photo](https://github.com/ayman-benmada/Sylius-Media-Plugin/blob/main/src/Resources/public/presentation-1.png?raw=true)
+![presentation photo](https://github.com/ayman-benmada/Sylius-Media-Plugin/blob/main/src/Resources/public/presentation-2.png?raw=true)
+![presentation photo](https://github.com/ayman-benmada/Sylius-Media-Plugin/blob/main/src/Resources/public/presentation-3.png?raw=true)
+![presentation photo](https://github.com/ayman-benmada/Sylius-Media-Plugin/blob/main/src/Resources/public/presentation-4.png?raw=true)
+
 ## Example
 
 Here you will find <strong><a href="https://github.com/ayman-benmada/Sylius-Media-Plugin/blob/main/docs/example.md">example</a></strong> that allow you to add media to any form.
