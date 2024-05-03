@@ -3,7 +3,7 @@ Example
 
 In this example we will add a logo to the PaymentMethod entity :
 
-App\Entity\Payment\PaymentMethod.php
+Add a new property to the PaymentMethod entity **App\Entity\Payment\PaymentMethod.php** :
 
 ```php
 <?php
@@ -40,7 +40,7 @@ class PaymentMethod extends BasePaymentMethod
 }
 ```
 
-App\Form\Extension\PaymentMethodExtension.php
+Customize the PaymentMethod form by creating **App\Form\Extension\PaymentMethodExtension.php** :
 
 ```php
 <?php
@@ -55,7 +55,7 @@ use Sylius\Bundle\PaymentBundle\Form\Type\PaymentMethodType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PaymentMethodExtension extends AbstractTypeExtension
+final class PaymentMethodExtension extends AbstractTypeExtension
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -64,7 +64,7 @@ class PaymentMethodExtension extends AbstractTypeExtension
                 'required' => false,
                 'multiple' => false,
                 'row_attr' => [
-                    'channels' => ['FASHION_WEB'],         // List of channel codes, by default all
+                    'channels' => ['FASHION_WEB'],          // List of channel codes, by default all
                     'tags' => ['payment_method'],           // List of tag codes, by default all
                     'types' => [MediaTypeInterface::IMAGE], // List of media types, by default all
                 ],
@@ -78,7 +78,15 @@ class PaymentMethodExtension extends AbstractTypeExtension
 }
 ```
 
-templates/bundles/SyliusAdminBundle/PaymentMethod/_form.html.twig
+```yaml
+services:
+    app.form.extension.type.payment_method:
+        class: App\Form\Extension\PaymentMethodExtension
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\PaymentBundle\Form\Type\PaymentMethodType }
+```
+
+Customize the template **@SyliusAdmin/PaymentMethod/_form.html.twig** by adding :
 
 ```html
 {% import "@MediaPlugin/Admin/Macro/media.html.twig" as media %}
@@ -88,6 +96,12 @@ templates/bundles/SyliusAdminBundle/PaymentMethod/_form.html.twig
 <div class="ui segment">
     <h4 class="ui dividing header">{{ 'sylius.ui.media'|trans }}</h4>
 
-    {{ media.addField(form.logo, 'sylius.ui.logo', false) }}
+    {{ media.addField(form.logo, 'app.ui.logo', false) }}
 </div>
+```
+
+Run the migration :
+```bash
+bin/console doctrine:migration:diff
+bin/console doctrine:migration:migrate
 ```

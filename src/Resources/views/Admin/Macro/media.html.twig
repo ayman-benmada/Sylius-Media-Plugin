@@ -25,10 +25,12 @@
                 {% set path = field.vars.data.file.path %}
                 {% set type = field.vars.data.type %}
 
-                {% if type is same as 'image' %}
+                {% if type is same as constant('Abenmada\\MediaPlugin\\Entity\\Media\\MediaTypeInterface::IMAGE') %}
                     <img class="ui small bordered image preview-file" src="{{ path | imagine_filter('sylius_shop_product_original') }}" width="300" alt="">
-                {% elseif type is same as 'video' %}
+                {% elseif type is same as constant('Abenmada\\MediaPlugin\\Entity\\Media\\MediaTypeInterface::VIDEO') %}
                     <video class="preview-file" controls muted width="300" src="{{ '/media/image/' ~ path }}"></video>
+                {% elseif type is same as constant('Abenmada\\MediaPlugin\\Entity\\Media\\MediaTypeInterface::AUDIO') %}
+                    <audio class="preview-file" controls muted src="{{ '/media/image/' ~ path }}"></audio>
                 {% else %}
                     <iframe class="preview-file" width="300" src="{{ '/media/image/' ~ path }}"></iframe>
                 {% endif %}

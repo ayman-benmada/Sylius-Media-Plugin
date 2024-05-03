@@ -5,10 +5,12 @@
         {% if form.vars.value.path|default(null) is not null %}
             {% set extension = form.vars.value.path | split('.') | last %}
 
-            {% if extension in ['png', 'jpg', 'jpeg', 'gif', 'webp'] %}
+            {% if extension in ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'] %}
                 <img class="preview-file ui small bordered image" src="{{ form.vars.value.path|imagine_filter('sylius_small') }}" alt="{{ form.vars.value.type }}"/>
-            {% elseif extension in ['mp4', 'mov'] %}
-                <video class="preview-file" controls width="300" src="{{ '/media/image/' ~ form.vars.value.path }}"></video>
+            {% elseif extension in ['mp4', 'mov', 'webm'] %}
+                <video class="preview-file" controls muted width="300" src="{{ '/media/image/' ~ form.vars.value.path }}"></video>
+            {% elseif extension in ['mp3', 'ogg'] %}
+                <audio class="preview-file" controls muted src="{{ '/media/image/' ~ form.vars.value.path }}"></audio>
             {% else %}
                 <iframe class="preview-file" width="300" src="{{ '/media/image/' ~ form.vars.value.path }}"></iframe>
             {% endif %}

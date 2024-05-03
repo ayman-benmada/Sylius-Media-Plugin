@@ -20,6 +20,7 @@ abenmada_media_plugin:
         created_at: Date de création
         types:
             image: Image
+            audio: Audio
             document: Document
             video: Vidéo
         modal:

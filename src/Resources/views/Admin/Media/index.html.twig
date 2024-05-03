@@ -75,10 +75,12 @@
 
                         <div class="card">
                             <div style="height: 250px">
-                                {% if row.type is same as 'image' %}
+                                {% if row.type is same as constant('Abenmada\\MediaPlugin\\Entity\\Media\\MediaTypeInterface::IMAGE')  %}
                                     <img src="{{ row.file.path | imagine_filter('sylius_shop_product_original') }}" alt="{{ row.alt }}" width="100%" height="100%" style="object-fit: cover;">
-                                {% elseif row.type is same as 'video' %}
+                                {% elseif row.type is same as constant('Abenmada\\MediaPlugin\\Entity\\Media\\MediaTypeInterface::VIDEO')  %}
                                     <video controls muted width="100%" height="100%" src="{{ '/media/image/' ~ row.file.path }}"></video>
+                                {% elseif row.type is same as constant('Abenmada\\MediaPlugin\\Entity\\Media\\MediaTypeInterface::AUDIO')  %}
+                                    <audio controls muted src="{{ '/media/image/' ~ row.file.path }}"></audio>
                                 {% else %}
                                     <iframe class="preview-file" width="100%" height="100%" src="{{ '/media/image/' ~ row.file.path }}"></iframe>
                                 {% endif %}
