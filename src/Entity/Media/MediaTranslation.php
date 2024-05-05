@@ -14,6 +14,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  *
  * @ORM\Table(name="abenmada_media_media_translation")
  */
+#[ORM\Table(name: 'abenmada_media_media_translation')]
+#[ORM\Entity]
 class MediaTranslation extends AbstractTranslation implements ResourceInterface
 {
     use TimestampableEntity;
@@ -25,12 +27,17 @@ class MediaTranslation extends AbstractTranslation implements ResourceInterface
      *
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     /** @ORM\Column(name="description", type="text", nullable=true) */
+    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
     private ?string $description = null;
 
     /** @ORM\Column(name="alt", type="string", length=255, nullable=true) */
+    #[ORM\Column(name: 'alt', type: 'string', length: 255, nullable: true)]
     private ?string $alt = null;
 
     public function getId(): ?int

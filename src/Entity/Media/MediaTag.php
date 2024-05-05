@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  *
  * @ORM\Table(name="abenmada_media_media_tag")
  */
+#[ORM\Table(name: 'abenmada_media_media_tag')]
+#[ORM\Entity]
 class MediaTag implements ResourceInterface, TranslatableInterface
 {
     use TimestampableEntity;
@@ -35,9 +37,13 @@ class MediaTag implements ResourceInterface, TranslatableInterface
      *
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     /** @ORM\Column(name="code", type="string", nullable=false) */
+    #[ORM\Column(name: 'code', type: 'string', nullable: false)]
     private string $code;
 
     /**
@@ -45,6 +51,8 @@ class MediaTag implements ResourceInterface, TranslatableInterface
      *
      * @ORM\JoinTable(name="abenmada_media_media_media_tag")
      */
+    #[ORM\JoinTable(name: 'abenmada_media_media_media_tag')]
+    #[ORM\ManyToMany(targetEntity: Media::class, mappedBy: 'tags')]
     private Collection $medias;
 
     public function __construct()

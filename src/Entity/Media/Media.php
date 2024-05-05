@@ -23,6 +23,8 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  *
  * @ORM\Table(name="abenmada_media_media")
  */
+#[ORM\Table(name: 'abenmada_media_media')]
+#[ORM\Entity]
 class Media implements ResourceInterface, TranslatableInterface, ImageAwareInterface
 {
     use TimestampableEntity;
@@ -38,15 +40,21 @@ class Media implements ResourceInterface, TranslatableInterface, ImageAwareInter
      *
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     /** @ORM\Column(name="code", type="string", length=255, nullable=false) */
+    #[ORM\Column(name: 'code', type: 'string', length: 255, nullable: false)]
     private string $code;
 
     /** @ORM\OneToOne(targetEntity=MediaFile::class, mappedBy="owner", orphanRemoval=true, cascade={"all"}) */
+    #[ORM\OneToOne(targetEntity: MediaFile::class, mappedBy: 'owner', orphanRemoval: true, cascade: ['all'])]
     private ImageInterface $file;
 
     /** @ORM\Column(name="type", type="string", length=255) */
+    #[ORM\Column(name: 'type', type: 'string', length: 255)]
     private string $type;
 
     /**
@@ -54,6 +62,8 @@ class Media implements ResourceInterface, TranslatableInterface, ImageAwareInter
      *
      * @ORM\JoinTable(name="abenmada_media_media_media_tag")
      */
+    #[ORM\JoinTable(name: 'abenmada_media_media_media_tag')]
+    #[ORM\ManyToMany(targetEntity: MediaTag::class, inversedBy: 'medias')]
     private Collection $tags;
 
     /**
@@ -61,6 +71,8 @@ class Media implements ResourceInterface, TranslatableInterface, ImageAwareInter
      *
      * @ORM\JoinTable(name="abenmada_media_media_channel")
      */
+    #[ORM\JoinTable(name: 'abenmada_media_media_channel')]
+    #[ORM\ManyToMany(targetEntity: Channel::class, inversedBy: 'medias')]
     private Collection $channels;
 
     public function __construct()

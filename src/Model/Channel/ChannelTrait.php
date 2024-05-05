@@ -15,6 +15,8 @@ trait ChannelTrait
      *
      * @ORM\JoinTable(name="abenmada_media_media_channel")
      */
+    #[ORM\JoinTable(name: 'abenmada_media_media_channel')]
+    #[ORM\ManyToMany(targetEntity: Media::class, mappedBy: 'mediaTags')]
     private Collection $medias;
 
     /**

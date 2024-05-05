@@ -13,6 +13,8 @@ use Sylius\Component\Core\Model\Image;
  *
  * @ORM\Table(name="abenmada_media_media_file")
  */
+#[ORM\Table(name: 'abenmada_media_media_file')]
+#[ORM\Entity]
 class MediaFile extends Image
 {
     use TimestampableEntity;
@@ -24,5 +26,7 @@ class MediaFile extends Image
      *
      * @var object|null
      */
+    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id', nullable: false, onDelete: 'cascade')]
+    #[ORM\OneToOne(targetEntity: Media::class, inversedBy: 'file')]
     protected $owner;
 }
