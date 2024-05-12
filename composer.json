@@ -1,5 +1,5 @@
 {
-    "name": "abenmada/media-plugin",
+    "name": "abenmada/sylius-media-plugin",
     "type": "sylius-plugin",
     "description": "The Media plugin provides a library to manage your media",
     "keywords": ["sylius", "sylius-plugin", "symfony", "e-commerce", "library", "media"],

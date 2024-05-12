@@ -1,4 +1,4 @@
-<h1>Media plugin</h1>
+<h1>Sylius Media Plugin</h1>
 
 <p>
     The Media plugin provides a library to manage your media
@@ -18,7 +18,7 @@ Here you will find <strong><a href="https://github.com/ayman-benmada/Sylius-Medi
 Require plugin with composer :
 
 ```bash
-composer require abenmada/media-plugin
+composer require abenmada/sylius-media-plugin
 ```
 
 Change your `config/bundles.php` file to add the line for the plugin :
